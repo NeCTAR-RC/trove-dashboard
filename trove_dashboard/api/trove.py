@@ -173,6 +173,10 @@ def instance_resize(request, instance_id, flavor_id):
                                                           flavor_id)
 
 
+def instance_upgrade(request, instance_id, version_id):
+    return troveclient(request).instances.upgrade(instance_id, version_id)
+
+
 def instance_backups(request, instance_id):
     return troveclient(request).instances.backups(instance_id)
 

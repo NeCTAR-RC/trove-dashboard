@@ -132,6 +132,44 @@ class ResizeInstanceForm(forms.SelfHandlingForm):
         return True
 
 
+class UpgradeInstanceForm(forms.SelfHandlingForm):
+    instance_id = forms.CharField(widget=forms.HiddenInput())
+    old_version_name = forms.CharField(label=_("Old Version"),
+                                       required=False,
+                                       widget=forms.TextInput(
+                                           attrs={'readonly': 'readonly'}))
+    new_version = forms.ChoiceField(label=_("New Version"),
+                                    help_text=_("Choose a new datastore "
+                                                "version."))
+
+    def __init__(self, request, *args, **kwargs):
+        super(UpgradeInstanceForm, self).__init__(request, *args, **kwargs)
+
+        old_version_id = kwargs.get('initial', {}).get('old_version_id')
+        choices = kwargs.get('initial', {}).get('versions')
+        # Remove current version from the list of version choices
+        choices = [(version_id, name) for (version_id, name) in choices
+                   if version_id != old_version_id]
+        if choices:
+            choices.insert(0, ("", _("Select a new version")))
+        else:
+            choices.insert(0, ("", _("No new versions available")))
+        self.fields['new_version'].choices = choices
+
+    def handle(self, request, data):
+        instance = data.get('instance_id')
+        version = data.get('new_version')
+        try:
+            api.trove.instance_upgrade(request, instance, version)
+
+            messages.success(request, _('Upgrading instance "%s"') % instance)
+        except Exception as e:
+            redirect = reverse("horizon:project:databases:index")
+            exceptions.handle(request, _('Unable to upgrade instance. %s') %
+                              e.message, redirect=redirect)
+        return True
+
+
 class PromoteToReplicaSourceForm(forms.SelfHandlingForm):
     instance_id = forms.CharField(widget=forms.HiddenInput())
 
