@@ -145,8 +145,6 @@ class SetInstanceDetailsAction(workflows.Action):
         zone_list.sort()
         if not zone_list:
             zone_list.insert(0, ("", _("No availability zones found")))
-        elif len(zone_list) > 1:
-            zone_list.insert(0, ("", _("Any Availability Zone")))
         return zone_list
 
     @memoized.memoized_method
@@ -291,6 +289,7 @@ class AddAccessAction(workflows.Action):
         * TROVE_ADD_DATABASE_PERMS = []
         """
     is_public = forms.BooleanField(label=_("Is Public"),
+                                   widget=forms.HiddenInput(),
                                    required=False)
     allowed_cidrs = forms.MultiIPField(label=_("Allowed CIDRs"),
                                        required=False,
