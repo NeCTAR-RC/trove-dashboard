@@ -32,6 +32,8 @@ urlpatterns = [
         name='resize_volume'),
     url(INSTANCES % 'resize_instance', views.ResizeInstanceView.as_view(),
         name='resize_instance'),
+    url(INSTANCES % 'upgrade_instance', views.UpgradeInstanceView.as_view(),
+        name='upgrade_instance'),
     url(INSTANCES % 'create_user', views.CreateUserView.as_view(),
         name='create_user'),
     url(USERS % 'edit_user', views.EditUserView.as_view(),
