@@ -410,6 +410,69 @@ class ResizeInstanceView(horizon_forms.ModalFormView):
         return initial
 
 
+class UpgradeInstanceView(horizon_forms.ModalFormView):
+    form_class = forms.UpgradeInstanceForm
+    form_id = "upgrade_instance_form"
+    modal_header = _("Upgrade Database Instance")
+    modal_id = "upgrade_instance_modal"
+    template_name = 'project/databases/upgrade_instance.html'
+    submit_label = "Upgrade Database Instance"
+    submit_url = 'horizon:project:databases:upgrade_instance'
+    success_url = reverse_lazy('horizon:project:databases:index')
+    page_title = _("Upgrade Database Instance")
+
+    @memoized.memoized_method
+    def get_object(self, *args, **kwargs):
+        instance_id = self.kwargs['instance_id']
+
+        try:
+            instance = api.trove.instance_get(self.request, instance_id)
+            datastore = instance.datastore.get('type')
+            datastore_version = instance.datastore.get('version')
+            versions = self.get_versions(datastore)
+            for id, name in versions:
+                if datastore_version == name:
+                    instance.datastore_version_id = id
+            return instance
+        except Exception:
+            redirect = reverse('horizon:project:databases:index')
+            msg = _('Unable to retrieve instance details.')
+            exceptions.handle(self.request, msg, redirect=redirect)
+
+    def get_context_data(self, **kwargs):
+        context = super(UpgradeInstanceView, self).get_context_data(**kwargs)
+        context['instance_id'] = self.kwargs['instance_id']
+        args = (self.kwargs['instance_id'],)
+        context['submit_url'] = reverse(self.submit_url, args=args)
+        return context
+
+    @memoized.memoized_method
+    def get_versions(self, datastore):
+        try:
+            versions = api.trove.datastore_version_list(self.request,
+                                                        datastore)
+            versions_list = []
+            for v in versions:
+                versions_list.append((v.id, v.name))
+            return versions_list
+        except Exception:
+            redirect = reverse("horizon:project:databases:index")
+            exceptions.handle(self.request,
+                              _('Unable to retrieve database versions.'),
+                              redirect=redirect)
+
+    def get_initial(self):
+        initial = super(UpgradeInstanceView, self).get_initial()
+        obj = self.get_object()
+        if obj:
+            initial.update({'instance_id': self.kwargs['instance_id'],
+                            'old_version_id': obj.datastore_version_id,
+                            'old_version_name': obj.datastore['version'],
+                            'versions': self.get_versions(
+                                obj.datastore['type'])})
+        return initial
+
+
 class PromoteToReplicaSourceView(horizon_forms.ModalFormView):
     form_class = forms.PromoteToReplicaSourceForm
     form_id = "promote_to_replica_source_form"

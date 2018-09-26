@@ -444,6 +444,21 @@ class ResizeInstance(tables.LinkAction):
         return urlresolvers.reverse(self.url, args=[instance_id])
 
 
+class UpgradeInstance(tables.LinkAction):
+    name = "upgrade_instance"
+    verbose_name = _("Upgrade Instance")
+    url = "horizon:project:databases:upgrade_instance"
+    classes = ("ajax-modal", "btn-resize")
+
+    def allowed(self, request, instance=None):
+        return ((instance.status in ACTIVE_STATES
+                 or instance.status == 'SHUTOFF'))
+
+    def get_link_url(self, datum):
+        instance_id = self.table.get_object_id(datum)
+        return urlresolvers.reverse(self.url, args=[instance_id])
+
+
 class AttachConfiguration(tables.LinkAction):
     name = "attach_configuration"
     verbose_name = _("Attach Configuration Group")
@@ -611,6 +626,7 @@ class InstancesTable(tables.DataTable):
         ("FAILED", False),
         ("REBOOT", None),
         ("RESIZE", None),
+        ("UPGRADE", None),
         ("BACKUP", None),
         ("SHUTDOWN", False),
         ("ERROR", False),
@@ -629,6 +645,8 @@ class InstancesTable(tables.DataTable):
                                  u"Rebooting")),
         ("RESIZE", pgettext_lazy("Current status of a Database Instance",
                                  u"Resizing")),
+        ("UPGRADE", pgettext_lazy("Current status of a Database Instance",
+                                  u"Upgrading")),
         ("BACKUP", pgettext_lazy("Current status of a Database Instance",
                                  u"Backup")),
         ("SHUTDOWN", pgettext_lazy("Current status of a Database Instance",
@@ -668,6 +686,7 @@ class InstancesTable(tables.DataTable):
         row_actions = (CreateBackup,
                        ResizeVolume,
                        ResizeInstance,
+                       UpgradeInstance,
                        PromoteToReplicaSource,
                        AttachConfiguration,
                        DetachConfiguration,
