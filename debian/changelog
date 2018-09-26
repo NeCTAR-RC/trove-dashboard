@@ -1,0 +1,139 @@
+trove-dashboard (10.0.0-0ubuntu1.1~cloud0) xenial-queens; urgency=medium
+
+  * New update for the Ubuntu Cloud Archive.
+
+ -- Openstack Ubuntu Testing Bot <openstack-testing-bot@ubuntu.com>  Thu, 15 Mar 2018 02:44:55 +0000
+
+trove-dashboard (10.0.0-0ubuntu1.1) bionic; urgency=medium
+
+  * d/python-trove-dashboard.postinst: Ensure /var/lib/openstack-dashboard
+    exists before chown.
+
+ -- Corey Bryant <corey.bryant@canonical.com>  Wed, 14 Mar 2018 21:05:49 -0400
+
+trove-dashboard (10.0.0-0ubuntu1) bionic; urgency=medium
+
+  * New upstream release for OpenStack Queens.
+
+ -- Corey Bryant <corey.bryant@canonical.com>  Wed, 28 Feb 2018 15:54:47 -0500
+
+trove-dashboard (10.0.0~rc1-0ubuntu1) bionic; urgency=medium
+
+  * New upstream release candidate for OpenStack Queens.
+
+ -- Corey Bryant <corey.bryant@canonical.com>  Wed, 14 Feb 2018 08:56:47 -0500
+
+trove-dashboard (10.0.0~b3-0ubuntu2) bionic; urgency=medium
+
+  * d/python-trove-dashboard.postinst: Align with horizon and other
+    dashboards by switching to using horizon instead of www-data.
+
+ -- Corey Bryant <corey.bryant@canonical.com>  Wed, 31 Jan 2018 15:25:19 -0500
+
+trove-dashboard (10.0.0~b3-0ubuntu1) bionic; urgency=medium
+
+  * New upstream milestone for OpenStack Queens.
+  * d/control: Align (Build-)Depends with upstream.
+
+ -- Corey Bryant <corey.bryant@canonical.com>  Fri, 26 Jan 2018 13:23:43 -0500
+
+trove-dashboard (10.0.0~b1-0ubuntu1) bionic; urgency=medium
+
+  * New upstream milestone for OpenStack Queens.
+  * d/*: wrap-and-sort -bast.
+  * d/control: Update Standards-Version to 4.1.2.
+  * d/watch: Scope to Queens series.
+
+ -- Corey Bryant <corey.bryant@canonical.com>  Tue, 12 Dec 2017 11:40:23 -0500
+
+trove-dashboard (9.0.0-0ubuntu1) artful; urgency=medium
+
+  * New upstream release for OpenStack Pike.
+
+ -- Corey Bryant <corey.bryant@canonical.com>  Fri, 01 Sep 2017 08:42:43 -0400
+
+trove-dashboard (9.0.0~rc1-0ubuntu1) artful; urgency=medium
+
+  * New upstream release candidate for OpenStack Pike.
+  * d/p/skip-test.patch: Skip test that is failing upstream and in
+    package build on 9.0.0.0rc1.
+
+ -- Corey Bryant <corey.bryant@canonical.com>  Fri, 18 Aug 2017 09:46:26 -0400
+
+trove-dashboard (9.0.0~b1-0ubuntu1) artful; urgency=medium
+
+  * New upstream milestone for OpenStack Pike.
+  * Align (Build-)Depends with upstream milestone.
+
+ -- James Page <james.page@ubuntu.com>  Sun, 30 Apr 2017 13:09:35 +0200
+
+trove-dashboard (8.0.0-0ubuntu1) zesty; urgency=medium
+
+  * New upstream release for OpenStack Ocata.
+
+ -- Corey Bryant <corey.bryant@canonical.com>  Wed, 22 Feb 2017 09:34:19 -0500
+
+trove-dashboard (8.0.0~rc2-0ubuntu1) zesty; urgency=medium
+
+  * New upstream milestone for Openstack Ocata. 
+
+ -- Chuck Short <zulcss@ubuntu.com>  Thu, 16 Feb 2017 08:48:00 -0500
+
+trove-dashboard (8.0.0~rc1-0ubuntu1) zesty; urgency=medium
+
+  * New upstream milestone for OpenStack Ocata.
+
+ -- Chuck Short <zulcss@ubuntu.com>  Thu, 09 Feb 2017 14:46:30 -0500
+
+trove-dashboard (8.0.0~b3-0ubuntu1) zesty; urgency=medium
+
+  * d/gbp.conf: Update gbp configuration file.
+  * d/control: Update Vcs-* links and maintainers.
+  * d/python-trove-dashboard.postinst: Only remove .secret_key_store
+    if it exists.
+  * d/rules: Get orig tarball from openstack.org.
+  * New upstream milestone for OpenStack Ocata.
+  * d/p/Fix_Django_1.10_Compatibility.patch: Dropped. Fixed upstream.
+
+ -- Corey Bryant <corey.bryant@canonical.com>  Tue, 31 Jan 2017 14:22:56 -0500
+
+trove-dashboard (7.0.0-3) unstable; urgency=medium
+
+  [ Ondřej Nový ]
+  * Bumped debhelper compat version to 10
+
+  [ Thomas Goirand ]
+  * Add upstream patch to fix Django 1.10 compat (Closes: #837238).
+
+ -- Thomas Goirand <zigo@debian.org>  Mon, 12 Dec 2016 16:41:50 +0100
+
+trove-dashboard (7.0.0-1) unstable; urgency=medium
+
+  [ Thomas Goirand ]
+  * New upstream release.
+  * Uploading to unstable.
+  * Added missing EPOC in (build-)depends: openstack-dashboard.
+  * Missing EPOC for keystoneclient and swiftclient as well.
+  * New upstream release.
+  * Using OpenStack's Gerrit as VCS URLs:
+    - Point .gitreview to packaging-deb project.
+    - Add .gitreview to extend-diff-ignore.
+
+  [ Ondřej Nový ]
+  * Standards-Version is 3.9.8 now (no change)
+  * d/rules: Removed UPSTREAM_GIT with default value
+
+ -- Thomas Goirand <zigo@debian.org>  Thu, 06 Oct 2016 18:28:06 +0200
+
+trove-dashboard (6.0.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Standards-Version: 3.9.7 (no change).
+
+ -- Thomas Goirand <zigo@debian.org>  Thu, 07 Apr 2016 22:32:56 +0200
+
+trove-dashboard (6.0.0~rc2-1) unstable; urgency=medium
+
+  * Initial release. (Closes: #812963)
+
+ -- Thomas Goirand <zigo@debian.org>  Mon, 25 Jan 2016 21:39:26 +0800
