@@ -430,6 +430,7 @@ class UpgradeInstanceView(horizon_forms.ModalFormView):
             datastore = instance.datastore.get('type')
             datastore_version = instance.datastore.get('version')
             versions = self.get_versions(datastore)
+            instance.datastore_version_id = None
             for id, name in versions:
                 if datastore_version == name:
                     instance.datastore_version_id = id
