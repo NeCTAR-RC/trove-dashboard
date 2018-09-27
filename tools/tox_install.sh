@@ -19,7 +19,7 @@ GIT_BASE=${GIT_BASE:-https://git.openstack.org/}
 
 install_project() {
     local project=$1
-    local branch=${2:-$BRANCH_NAME}
+    local branch='stable/queens'
     local module_name=${project//-/_}
 
     set +e
