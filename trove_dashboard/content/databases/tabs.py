@@ -64,7 +64,7 @@ class OverviewTab(tabs.Tab):
         if db_capability.is_mysql_compatible(datastore):
             return 'mysql'
 
-        return datastore
+        return datastore.lower()
 
 
 class UserTab(tabs.TableTab):
