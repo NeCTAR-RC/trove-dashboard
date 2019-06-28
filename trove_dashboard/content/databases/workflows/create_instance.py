@@ -145,8 +145,6 @@ class SetInstanceDetailsAction(workflows.Action):
         zone_list.sort()
         if not zone_list:
             zone_list.insert(0, ("", _("No availability zones found")))
-        elif len(zone_list) > 1:
-            zone_list.insert(0, ("", _("Any Availability Zone")))
         return zone_list
 
     @memoized.memoized_method
