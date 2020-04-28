@@ -1,0 +1,2 @@
+skip-django224-tests.patch
+skip-test.patch

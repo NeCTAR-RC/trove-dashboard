@@ -1,0 +1,50 @@
+Description: Skip tests that are failing with python3-django 2:2.2.4.
+  This patch can be dropped once python3-django 2:2.2.4 is removed
+  from eoan-proposed (see https://bugs.launchpad.net/bugs/1842969).
+Author: Corey Bryant <corey.bryant@canonical.com>
+Forwarded: not-needed
+
+--- a/trove_dashboard/content/database_backups/tests.py
++++ b/trove_dashboard/content/database_backups/tests.py
+@@ -16,6 +16,7 @@
+ from django.utils.translation import ugettext_lazy as _
+ import mock
+ import six
++import testtools
+ 
+ from openstack_auth import policy
+ from openstack_dashboard import api as dash_api
+@@ -59,6 +60,7 @@
+         self.assertEqual(res.status_code, 200)
+         self.assertMessageCount(res, error=1)
+ 
++    @testtools.skip("Skipped while python-django 2:2.2.4 is in eoan-proposed")
+     @test.create_mocks({
+         api.trove: ('instance_list', 'backup_list', 'backup_create'),
+         policy: ('check',),
+@@ -184,6 +186,7 @@
+             test.IsHttpRequest(), test.IsA(str))
+         self.assertTemplateUsed(res, 'project/database_backups/details.html')
+ 
++    @testtools.skip("Skipped while python-django 2:2.2.4 is in eoan-proposed")
+     @test.create_mocks({
+         api.trove: ('backup_get', 'backup_list', 'configuration_list',
+                     'datastore_flavors', 'datastore_list',
+--- a/trove_dashboard/content/databases/tests.py
++++ b/trove_dashboard/content/databases/tests.py
+@@ -18,6 +18,7 @@
+ import django
+ from django import http
+ from django.urls import reverse
++import testtools
+ import unittest
+ 
+ import mock
+@@ -123,6 +124,7 @@
+         self.assertTemplateUsed(res, 'project/databases/index.html')
+         self.assertMessageCount(res, error=1)
+ 
++    @testtools.skip("Skipped while python-django 2:2.2.4 is in eoan-proposed")
+     @test.create_mocks({
+         api.trove: ('backup_list', 'configuration_list', 'datastore_flavors',
+                     'datastore_list', 'datastore_version_list', 'flavor_list',
