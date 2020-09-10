@@ -34,7 +34,7 @@ from trove_dashboard.content.database_backups \
     import tables as backup_tables
 
 
-ACTIVE_STATES = ("ACTIVE",)
+ACTIVE_STATES = ("ACTIVE", "HEALTHY")
 
 
 class DeleteInstance(tables.DeleteAction):
@@ -627,6 +627,7 @@ def get_databases(user):
 class InstancesTable(tables.DataTable):
     STATUS_CHOICES = (
         ("ACTIVE", True),
+        ("HEALTHY", True),
         ("BLOCKED", True),
         ("BUILD", None),
         ("FAILED", False),
@@ -641,6 +642,8 @@ class InstancesTable(tables.DataTable):
     STATUS_DISPLAY_CHOICES = (
         ("ACTIVE", pgettext_lazy("Current status of a Database Instance",
                                  u"Active")),
+        ("Healthy", pgettext_lazy("Current status of a Database Instance",
+                                  u"Healthy")),
         ("BLOCKED", pgettext_lazy("Current status of a Database Instance",
                                   u"Blocked")),
         ("BUILD", pgettext_lazy("Current status of a Database Instance",
