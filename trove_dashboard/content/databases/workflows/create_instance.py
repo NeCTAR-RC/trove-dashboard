@@ -216,9 +216,6 @@ class SetInstanceDetailsAction(workflows.Action):
                         # for details.
                         if not v.to_dict().get('active', True):
                             continue
-                        if self.backup_id:
-                            if v.id != backup.datastore['version_id']:
-                                continue
                         selection_text = self._build_datastore_display_text(
                             ds.name, v.name)
                         widget_text = self._build_widget_field_name(
