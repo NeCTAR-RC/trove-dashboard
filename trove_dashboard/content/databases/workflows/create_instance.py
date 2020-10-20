@@ -559,7 +559,7 @@ class LaunchInstance(workflows.Workflow):
     def _get_nics(self, context):
         netids = context.get('network_id', None)
         if netids:
-            return [{"net-id": netid, "v4-fixed-ip": ""}
+            return [{"net-id": netid}
                     for netid in netids]
         else:
             return None
