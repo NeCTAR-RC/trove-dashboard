@@ -34,7 +34,7 @@ from trove_dashboard.content.database_backups \
     import tables as backup_tables
 
 
-ACTIVE_STATES = ("ACTIVE",)
+ACTIVE_STATES = ("ACTIVE","HEALTHY")
 
 
 class DeleteInstance(tables.DeleteAction):
@@ -610,6 +610,12 @@ def get_volume_size(instance):
     return _("Not available")
 
 
+def get_used_size(instance):
+    if hasattr(instance, "volume"):
+        return sizeformat.diskgbformat(instance.volume.get("used"))
+    return _("Not available")
+
+
 def get_databases(user):
     if hasattr(user, "access"):
         databases = [db.name for db in user.access]
@@ -620,6 +626,7 @@ def get_databases(user):
 
 class InstancesTable(tables.DataTable):
     STATUS_CHOICES = (
+        ("HEALTHY", True),
         ("ACTIVE", True),
         ("BLOCKED", True),
         ("BUILD", None),
@@ -633,6 +640,8 @@ class InstancesTable(tables.DataTable):
         ("RESTART_REQUIRED", None),
     )
     STATUS_DISPLAY_CHOICES = (
+        ("HEALTHY", pgettext_lazy("Current status of a Database Instance",
+                                  u"Healthy")),
         ("ACTIVE", pgettext_lazy("Current status of a Database Instance",
                                  u"Active")),
         ("BLOCKED", pgettext_lazy("Current status of a Database Instance",
@@ -668,6 +677,9 @@ class InstancesTable(tables.DataTable):
     size = tables.Column(get_size,
                          verbose_name=_("Size"),
                          attrs={'data-type': 'size'})
+    used = tables.Column(get_used_size,
+                           verbose_name=_("Volume Used"),
+                           attrs={'data-type': 'size'})
     volume = tables.Column(get_volume_size,
                            verbose_name=_("Volume Size"),
                            attrs={'data-type': 'size'})
