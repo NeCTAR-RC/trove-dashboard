@@ -58,6 +58,8 @@
     <dd>{{ instance.full_flavor.name }}</dd>
     <dt>{% trans "RAM" %}</dt>
     <dd>{{ instance.full_flavor.ram|mb_float_format }}</dd>
+    <dt>{% trans "Volume Size" %}</dt>
+    <dd>{{ instance.volume.size|diskgbformat }}</dd>
     <dt>{% trans "Created" %}</dt>
     <dd>{{ instance.created|parse_isotime }}</dd>
     <dt>{% trans "Updated" %}</dt>
@@ -93,7 +95,7 @@
     </dl>
   {% endif %}
 
-{% if instance.volume %}
+{% if instance.volume.used %}
   <h4>Volume Usage</h4>
   <hr class="header_rule">
   <div class="clearfix">
