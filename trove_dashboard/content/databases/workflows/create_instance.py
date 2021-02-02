@@ -289,6 +289,7 @@ class AddAccessAction(workflows.Action):
         * TROVE_ADD_DATABASE_PERMS = []
         """
     is_public = forms.BooleanField(label=_("Is Public"),
+                                   widget=forms.HiddenInput(),
                                    required=False)
     allowed_cidrs = forms.MultiIPField(label=_("Allowed CIDRs"),
                                        required=False,
