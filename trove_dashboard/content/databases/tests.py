@@ -154,7 +154,7 @@ class DatabaseTests(test.TestCase):
 
         res = self.client.get(LAUNCH_URL)
         self.assert_mock_multiple_calls_with_same_arguments(
-            self.mock_check, 4, mock.call((), test.IsHttpRequest()))
+            self.mock_check, 5, mock.call((), test.IsHttpRequest()))
         self.assert_mock_multiple_calls_with_same_arguments(
             self.mock_datastore_flavors, 20,
             mock.call(test.IsHttpRequest(),
@@ -260,7 +260,7 @@ class DatabaseTests(test.TestCase):
 
         res = self.client.post(LAUNCH_URL, post)
         self.assert_mock_multiple_calls_with_same_arguments(
-            self.mock_check, 4, mock.call((), test.IsHttpRequest()))
+            self.mock_check, 5, mock.call((), test.IsHttpRequest()))
         self.assert_mock_multiple_calls_with_same_arguments(
             self.mock_datastore_flavors, 20,
             mock.call(test.IsHttpRequest(),
@@ -297,7 +297,8 @@ class DatabaseTests(test.TestCase):
             replica_count=None,
             volume_type=None,
             locality=None,
-            availability_zone=test.IsA(six.text_type))
+            availability_zone=test.IsA(six.text_type),
+            access=None)
         self.assertRedirectsNoFollow(res, INDEX_URL)
 
     @test.create_mocks({
@@ -350,7 +351,7 @@ class DatabaseTests(test.TestCase):
 
         res = self.client.post(LAUNCH_URL, post)
         self.assert_mock_multiple_calls_with_same_arguments(
-            self.mock_check, 4, mock.call((), test.IsHttpRequest()))
+            self.mock_check, 5, mock.call((), test.IsHttpRequest()))
         self.assert_mock_multiple_calls_with_same_arguments(
             self.mock_datastore_flavors, 20,
             mock.call(test.IsHttpRequest(),
@@ -387,7 +388,8 @@ class DatabaseTests(test.TestCase):
             replica_count=None,
             volume_type=None,
             locality=None,
-            availability_zone=test.IsA(six.text_type))
+            availability_zone=test.IsA(six.text_type),
+            access=None)
         self.assertRedirectsNoFollow(res, INDEX_URL)
 
     @test.create_mocks({
@@ -1084,7 +1086,7 @@ class DatabaseTests(test.TestCase):
 
         res = self.client.post(LAUNCH_URL, post)
         self.assert_mock_multiple_calls_with_same_arguments(
-            self.mock_check, 4, mock.call((), test.IsHttpRequest()))
+            self.mock_check, 5, mock.call((), test.IsHttpRequest()))
         self.assert_mock_multiple_calls_with_same_arguments(
             self.mock_datastore_flavors, 20,
             mock.call(test.IsHttpRequest(),
@@ -1124,7 +1126,8 @@ class DatabaseTests(test.TestCase):
             replica_count=2,
             volume_type=None,
             locality=None,
-            availability_zone=test.IsA(six.text_type))
+            availability_zone=test.IsA(six.text_type),
+            access=None)
         self.assertRedirectsNoFollow(res, INDEX_URL)
 
     @test.create_mocks({
