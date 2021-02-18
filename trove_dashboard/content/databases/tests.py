@@ -255,7 +255,8 @@ class DatabaseTests(test.TestCase):
             'datastore': field_name,
             field_name: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
             'network': self.networks.first().id,
-            'volume_type': 'no_type'
+            'volume_type': 'no_type',
+            'allowed_cidr': '192.168.0.0/24',
         }
 
         res = self.client.post(LAUNCH_URL, post)
@@ -297,7 +298,8 @@ class DatabaseTests(test.TestCase):
             replica_count=None,
             volume_type=None,
             locality=None,
-            availability_zone=test.IsA(six.text_type))
+            availability_zone=test.IsA(six.text_type),
+            access={'allowed_cidr': '192.168.0.0/24'})
         self.assertRedirectsNoFollow(res, INDEX_URL)
 
     @test.create_mocks({
@@ -387,7 +389,8 @@ class DatabaseTests(test.TestCase):
             replica_count=None,
             volume_type=None,
             locality=None,
-            availability_zone=test.IsA(six.text_type))
+            availability_zone=test.IsA(six.text_type),
+            access=None)
         self.assertRedirectsNoFollow(res, INDEX_URL)
 
     @test.create_mocks({
@@ -1124,7 +1127,8 @@ class DatabaseTests(test.TestCase):
             replica_count=2,
             volume_type=None,
             locality=None,
-            availability_zone=test.IsA(six.text_type))
+            availability_zone=test.IsA(six.text_type),
+            access=None)
         self.assertRedirectsNoFollow(res, INDEX_URL)
 
     @test.create_mocks({
