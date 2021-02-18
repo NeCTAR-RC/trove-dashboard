@@ -54,6 +54,16 @@ class SetInstanceDetailsAction(workflows.Action):
         label=_("Volume Type"),
         required=False,
         help_text=_("Applicable only if the volume size is specified."))
+    allowed_cidr = forms.IPField(
+        label=_("Allowed CIDRs"),
+        required=False,
+        initial="0.0.0.0/0",
+        help_text=_("Classless Inter-Domain Routing "
+                    "(e.g. 192.168.0.0/24, or "
+                    "2001:db8::/128)"),
+        version=forms.IPv4 | forms.IPv6,
+        mask=True,
+        widget=forms.TextInput())
     datastore = forms.ChoiceField(
         label=_("Datastore"),
         help_text=_("Type and version of datastore."),
@@ -160,7 +170,7 @@ class SetInstanceDetailsAction(workflows.Action):
                               redirect=redirect)
 
     @memoized.memoized_method
-    def populate_volume_type_choices(self, request, context):
+    def get_volume_types(self, request):
         try:
             volume_types = dash_api.cinder.volume_type_list(request)
             return ([("no_type", _("No volume type"))] +
@@ -169,6 +179,9 @@ class SetInstanceDetailsAction(workflows.Action):
         except Exception:
             LOG.exception("Exception while obtaining volume types list")
             self._volume_types = []
+
+    def populate_volume_type_choices(self, request, context):
+        return self.get_volume_types(request)
 
     @memoized.memoized_method
     def datastores(self, request):
@@ -278,7 +291,7 @@ TROVE_ADD_PERMS = TROVE_ADD_USER_PERMS + TROVE_ADD_DATABASE_PERMS
 class SetInstanceDetails(workflows.Step):
     action_class = SetInstanceDetailsAction
     contributes = ("name", "volume", "volume_type", "flavor", "datastore",
-                   "locality", "availability_zone")
+                   "locality", "availability_zone", "allowed_cidr")
 
 
 class AddDatabasesAction(workflows.Action):
