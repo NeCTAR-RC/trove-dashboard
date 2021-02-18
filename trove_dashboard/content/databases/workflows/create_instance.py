@@ -61,6 +61,20 @@ class SetInstanceDetailsAction(workflows.Action):
             'class': 'switchable',
             'data-slug': 'datastore'
         }))
+    allowed_cidr = forms.IPField(
+        label=_("CIDR"),
+        required=False,
+        initial="0.0.0.0/0",
+        help_text=_("Classless Inter-Domain Routing "
+                    "(e.g. 192.168.0.0/24, or "
+                    "2001:db8::/128)"),
+        version=forms.IPv4 | forms.IPv6,
+        mask=True,
+        widget=forms.TextInput(
+            attrs={'class': 'switched',
+                   'data-required-when-shown': 'true',
+                   'data-switch-on': 'remote',
+                   'data-remote-cidr': _('CIDR')}))
 
     def __init__(self, request, *args, **kwargs):
         if args:
@@ -278,7 +292,7 @@ TROVE_ADD_PERMS = TROVE_ADD_USER_PERMS + TROVE_ADD_DATABASE_PERMS
 class SetInstanceDetails(workflows.Step):
     action_class = SetInstanceDetailsAction
     contributes = ("name", "volume", "volume_type", "flavor", "datastore",
-                   "locality", "availability_zone")
+                   "locality", "availability_zone", "allowed_cidr")
 
 
 class AddDatabasesAction(workflows.Action):
