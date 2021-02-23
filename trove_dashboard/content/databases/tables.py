@@ -618,9 +618,9 @@ def get_databases(user):
     return _("-")
 
 
-class RenameInstance(tables.LinkAction):
+class UpdateInstance(tables.LinkAction):
     name = "edit_instance"
-    verbose_name = _("Rename Instance")
+    verbose_name = _("Update Instance")
     url = "horizon:project:databases:edit_instance"
     classes = ("btn-attach-config", "ajax-modal")
 
@@ -698,7 +698,7 @@ class InstancesTable(tables.DataTable):
         row_class = UpdateRow
         table_actions = (LaunchLink, DeleteInstance)
         row_actions = (CreateBackup,
-                       RenameInstance,
+                       UpdateInstance,
                        ResizeVolume,
                        ResizeInstance,
                        UpgradeInstance,
