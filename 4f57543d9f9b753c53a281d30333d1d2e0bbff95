@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8efbe92_1c9cbf1f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-08-26T06:39:17Z",
+      "side": 1,
+      "message": "Rename this to \"Hide is_public field in create instance form\"",
+      "revId": "4f57543d9f9b753c53a281d30333d1d2e0bbff95",
+      "serverId": "f182a8af-62ca-4ceb-ab81-14f8fec9c6c5"
+    }
+  ]
+}
