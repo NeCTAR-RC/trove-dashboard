@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6ca3408_bcd86e51",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-08-26T06:40:40Z",
+      "side": 1,
+      "message": "This is upstream too so we can drop this too I think. may need a follow up change to do the mod I did but may not anymore",
+      "revId": "74a182d601bb152f552213ea6682bce7fdfc1564",
+      "serverId": "f182a8af-62ca-4ceb-ab81-14f8fec9c6c5"
+    }
+  ]
+}
