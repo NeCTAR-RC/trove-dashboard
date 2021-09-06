@@ -771,11 +771,6 @@ class InstancesTable(tables.DataTable):
                            verbose_name=_("Status"),
                            status_choices=STATUS_CHOICES,
                            display_choices=STATUS_DISPLAY_CHOICES)
-    operating_status = tables.Column("operating_status",
-                                     verbose_name=_("Operating Status"),
-                                     status=True,
-                                     status_choices=STATUS_CHOICES,
-                                     display_choices=STATUS_DISPLAY_CHOICES)
 
     class Meta(object):
         name = "databases"
