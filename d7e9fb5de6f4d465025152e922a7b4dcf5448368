@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9423425_13388a01",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-09-06T23:12:34Z",
+      "side": 1,
+      "message": "Instead of this you need to revert the d371520529ea06669362ea0c1f47f1831f6be8b5 commit",
+      "revId": "d7e9fb5de6f4d465025152e922a7b4dcf5448368",
+      "serverId": "f182a8af-62ca-4ceb-ab81-14f8fec9c6c5"
+    }
+  ]
+}
