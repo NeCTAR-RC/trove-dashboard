@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ced0569d_05828962",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-09-06T23:13:22Z",
+      "side": 1,
+      "message": "Instead of this you should revert 69087288e8dab867d31cf530b2c22a21a47efa26",
+      "revId": "28b0175c316b9188c65c804dcd14f5bb71006ef5",
+      "serverId": "f182a8af-62ca-4ceb-ab81-14f8fec9c6c5"
+    }
+  ]
+}
