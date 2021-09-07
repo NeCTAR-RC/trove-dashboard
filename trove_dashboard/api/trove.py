@@ -13,22 +13,16 @@
 #    under the License.
 
 from django.conf import settings
-from horizon.utils import functions as utils
-from horizon.utils.memoized import memoized  # noqa
+from troveclient.v1 import client
+
 from keystoneauth1 import session
 from keystoneclient.auth import token_endpoint
-from novaclient import client as nova_client
 from openstack_auth import utils as auth_utils
 from openstack_dashboard.api import base
 from oslo_log import log as logging
-from troveclient.v1 import client
 
-# Supported compute versions
-NOVA_VERSIONS = base.APIVersionManager("compute", preferred_version=2)
-NOVA_VERSIONS.load_supported_version(1.1,
-                                     {"client": nova_client, "version": 1.1})
-NOVA_VERSIONS.load_supported_version(2, {"client": nova_client, "version": 2})
-NOVA_VERSION = NOVA_VERSIONS.get_active_version()['version']
+from horizon.utils import functions as utils
+from horizon.utils.memoized import memoized  # noqa
 
 LOG = logging.getLogger(__name__)
 
@@ -286,40 +280,25 @@ def backup_strategy_delete(request, instance_id=None, project_id=None):
         instance_id=instance_id, project_id=project_id)
 
 
-def nova_client_client(request):
-    insecure = getattr(settings, 'OPENSTACK_SSL_NO_VERIFY', False)
-    cacert = getattr(settings, 'OPENSTACK_SSL_CACERT', None)
-    endpoint_type = getattr(settings, 'OPENSTACK_ENDPOINT_TYPE', 'publicURL')
-    region = request.user.services_region
-
-    endpoint = base.url_for(request, 'compute')
-    auth_url, _ = auth_utils.fix_auth_url_version_prefix(
-        settings.OPENSTACK_KEYSTONE_URL)
-    auth = token_endpoint.Token(auth_url, request.user.token.id)
-    verify = not insecure and (cacert or True)
-
-    nova = nova_client.Client(
-        NOVA_VERSION,
-        session=session.Session(auth=auth, verify=verify),
-        endpoint_type=endpoint_type,
-        service_type='compute',
-        region_name=region,
-        endpoint_override=endpoint)
-
-    return nova
-
-
 def flavor_list(request):
-    return nova_client_client(request).flavors.list()
+    return troveclient(request).flavors.list()
 
 
 def datastore_flavors(request, datastore_name=None,
                       datastore_version=None):
+    # if datastore info is available then get datastore specific flavors
+    if datastore_name and datastore_version:
+        try:
+            return troveclient(request).flavors.\
+                list_datastore_version_associated_flavors(datastore_name,
+                                                          datastore_version)
+        except Exception:
+            LOG.warning("Failed to retrieve datastore specific flavors")
     return flavor_list(request)
 
 
 def flavor_get(request, flavor_id):
-    return nova_client_client(request).flavors.get(flavor_id)
+    return troveclient(request).flavors.get(flavor_id)
 
 
 def root_enable(request, instance_ids):
