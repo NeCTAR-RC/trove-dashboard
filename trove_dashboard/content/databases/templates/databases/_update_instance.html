@@ -3,4 +3,5 @@
 
 {% block modal-body-right %}
   <p>{% trans "Update instance." %}</p>
+  <p>{% blocktrans trimmed %}<strong>Security Warning:</strong> Leaving 'Allowed CIDRs' blank or setting to 0.0.0.0/0 may expose the database instance to the Internet. Access should be restricted to the specific IPs or subnets that require it.{% endblocktrans %}</p>
 {% endblock %}
