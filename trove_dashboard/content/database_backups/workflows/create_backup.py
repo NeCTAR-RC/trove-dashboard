@@ -38,7 +38,7 @@ class BackupDetailsAction(workflows.Action):
                                required=False,
                                help_text=_("Optional parent backup"))
     swift_container = forms.CharField(max_length=256,
-                                      widget=forms.TextInput(),
+                                      widget=forms.HiddenInput(),
                                       label=_("Swift Container Name"),
                                       required=False,
                                       help_text=_(

@@ -1034,6 +1034,7 @@ class DatabaseTests(test.TestCase):
         self.assertNoFormErrors(res)
         self.assertRedirectsNoFollow(res, INDEX_URL)
 
+    @unittest.skip("Replica setting in form disabled")
     @test.create_mocks({
         api.trove: ('backup_list', 'configuration_list', 'datastore_flavors',
                     'datastore_list', 'datastore_version_list', 'flavor_list',
