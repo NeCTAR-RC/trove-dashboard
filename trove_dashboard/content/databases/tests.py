@@ -241,7 +241,7 @@ class DatabaseTests(test.TestCase):
 
         self.mock_network_list_for_tenant.return_value = self.networks.list()
 
-        nics = [{"network_id": self.networks.first().id}]
+        nics = [{"net-id": self.networks.first().id}]
 
         datastore = 'mysql'
         datastore_version = '5.5'
@@ -329,7 +329,7 @@ class DatabaseTests(test.TestCase):
 
         self.mock_network_list_for_tenant.return_value = self.networks.list()
 
-        nics = [{"network_id": self.networks.first().id}]
+        nics = [{"net-id": self.networks.first().id}]
 
         datastore = 'mysql'
         datastore_version = '5.5'
@@ -1057,7 +1057,7 @@ class DatabaseTests(test.TestCase):
 
         self.mock_network_list_for_tenant.return_value = self.networks.list()
 
-        nics = [{"network_id": self.networks.first().id}]
+        nics = [{"net-id": self.networks.first().id}]
 
         self.mock_availability_zone_list.return_value = (
             self.availability_zones.list())
