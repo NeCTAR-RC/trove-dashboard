@@ -113,6 +113,7 @@ class SetInstanceDetailsAction(workflows.Action):
         # Add this field to the end after the dynamic fields
         self.fields['locality'] = forms.ChoiceField(
             label=_("Locality"),
+            widget=forms.HiddenInput(),
             choices=[("", "None"),
                      ("affinity", "affinity"),
                      ("anti-affinity", "anti-affinity")],
@@ -405,8 +406,7 @@ class AdvancedAction(workflows.Action):
         help_text=_("Choose initial state."),
         choices=[
             ('', _('None')),
-            ('backup', _('Restore from Backup')),
-            ('master', _('Replicate from Instance'))],
+            ('backup', _('Restore from Backup'))],
         widget=forms.Select(attrs={
             'class': 'switchable',
             'data-slug': 'initial_state'
@@ -432,6 +432,7 @@ class AdvancedAction(workflows.Action):
     replica_count = forms.IntegerField(
         label=_('Replica Count'),
         required=False,
+        widget=forms.HiddenInput(),
         min_value=1,
         initial=1,
         help_text=_('Specify the number of replicas to be created'))
