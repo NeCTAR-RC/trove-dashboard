@@ -332,7 +332,7 @@ class AddAccessAction(workflows.Action):
                                    widget=forms.HiddenInput(),
                                    required=False)
     allowed_cidrs = forms.MultiIPField(label=_("Allowed CIDRs"),
-                                       required=False,
+                                       required=True,
                                        version=forms.IPv4 | forms.IPv6,
                                        mask=True,
                                        widget=forms.TextInput(),
