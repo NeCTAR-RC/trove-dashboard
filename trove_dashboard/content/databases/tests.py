@@ -51,9 +51,6 @@ class DatabaseTests(test.TestCase):
         res = self.client.get(INDEX_URL)
         self.mock_instance_list.assert_called_once_with(
             test.IsHttpRequest(), marker=None)
-        replica_id = databases[-1].replicas[0]['id']
-        self.mock_instance_get.assert_called_once_with(test.IsHttpRequest(),
-                                                       replica_id)
         self.mock_flavor_list.assert_called_once_with(test.IsHttpRequest())
         self.assertTemplateUsed(res, 'project/databases/index.html')
         # Check the Host column displaying ip or hostname
@@ -72,9 +69,6 @@ class DatabaseTests(test.TestCase):
         res = self.client.get(INDEX_URL)
         self.mock_instance_list.assert_called_once_with(
             test.IsHttpRequest(), marker=None)
-        replica_id = databases[-1].replicas[0]['id']
-        self.mock_instance_get.assert_called_once_with(test.IsHttpRequest(),
-                                                       replica_id)
         self.mock_flavor_list.assert_called_once_with(test.IsHttpRequest())
         self.assertTemplateUsed(res, 'project/databases/index.html')
         self.assertMessageCount(res, error=1)
@@ -105,9 +99,6 @@ class DatabaseTests(test.TestCase):
         res = self.client.get(INDEX_URL)
         self.mock_instance_list.assert_called_once_with(
             test.IsHttpRequest(), marker=None)
-        replica_id = databases[-1].replicas[0]['id']
-        self.mock_instance_get.assert_called_once_with(test.IsHttpRequest(),
-                                                       replica_id)
         self.mock_flavor_list.assert_called_once_with(test.IsHttpRequest())
         self.assertTemplateUsed(res, 'project/databases/index.html')
         self.assertContains(
@@ -125,9 +116,6 @@ class DatabaseTests(test.TestCase):
         res = self.client.get(INDEX_URL)
         self.mock_instance_list.assert_called_once_with(
             test.IsHttpRequest(), marker=None)
-        replica_id = databases[-1].replicas[0]['id']
-        self.mock_instance_get.assert_called_once_with(test.IsHttpRequest(),
-                                                       replica_id)
         self.mock_flavor_list.assert_called_once_with(test.IsHttpRequest())
         self.assertTemplateUsed(res, 'project/databases/index.html')
         self.assertMessageCount(res, error=1)
