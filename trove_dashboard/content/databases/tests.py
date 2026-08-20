@@ -173,6 +173,39 @@ class DatabaseTests(test.TestCase):
             test.IsHttpRequest())
         self.assertTemplateUsed(res, 'project/databases/launch.html')
 
+    @test.create_mocks({
+        api.trove: ('backup_list', 'configuration_list', 'datastore_flavors',
+                    'datastore_list', 'datastore_version_list', 'flavor_list',
+                    'instance_list'),
+        dash_api.cinder: ('volume_type_list',),
+        dash_api.neutron: ('network_list_for_tenant',),
+        dash_api.nova: ('availability_zone_list',),
+        policy: ('check',),
+    })
+    def test_launch_instance_flavors_filtered_by_version_id(self):
+        # Trove looks the datastore version up by UUID against
+        # datastore_version_metadata; given a version name it matches
+        # nothing and quietly hands back every nova flavor.
+        self.mock_check.return_value = True
+        self.mock_datastore_flavors.return_value = self.flavors.list()
+        self.mock_backup_list.return_value = self.database_backups.list()
+        self.mock_configuration_list.return_value = []
+        self.mock_instance_list.return_value = self.databases.list()
+        self.mock_datastore_list.return_value = self.datastores.list()
+        self.mock_datastore_version_list.return_value = (
+            self.datastore_versions.list())
+        self.mock_volume_type_list.return_value = []
+        self.mock_network_list_for_tenant.return_value = self.networks.list()
+        self.mock_availability_zone_list.return_value = (
+            self.availability_zones.list())
+
+        self.client.get(LAUNCH_URL)
+
+        requested = {call.args[2]
+                     for call in self.mock_datastore_flavors.call_args_list}
+        self.assertEqual({v.id for v in self.datastore_versions.list()},
+                         requested)
+
     # django 1.7 and later does not handle the thrown Http302
     # exception well enough.
     # TODO(mrunge): re-check when django-1.8 is stable

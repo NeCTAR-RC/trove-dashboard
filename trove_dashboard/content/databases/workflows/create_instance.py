@@ -267,7 +267,7 @@ class SetInstanceDetailsAction(workflows.Action):
                                            ((widget_text, selection_text),))
                         self._add_datastore_flavor_field(request,
                                                          ds.name,
-                                                         v.name)
+                                                         v)
                     choices = choices + version_choices
         return choices
 
@@ -275,10 +275,11 @@ class SetInstanceDetailsAction(workflows.Action):
                                     request,
                                     datastore,
                                     datastore_version):
-        name = self._build_widget_field_name(datastore, datastore_version)
+        name = self._build_widget_field_name(datastore,
+                                             datastore_version.name)
         attr_key = 'data-datastore-' + name
         field_name = self._build_flavor_field_name(datastore,
-                                                   datastore_version)
+                                                   datastore_version.name)
         self.fields[field_name] = forms.ChoiceField(
             label=_("Flavor"),
             help_text=_("Size of image to launch."),
@@ -288,9 +289,10 @@ class SetInstanceDetailsAction(workflows.Action):
                 'data-switch-on': 'datastore',
                 attr_key: _("Flavor")
             }))
+        # Trove matches this by UUID; a version name returns all flavors
         valid_flavors = self.datastore_flavors(request,
                                                datastore,
-                                               datastore_version)
+                                               datastore_version.id)
         if valid_flavors:
             self.fields[field_name].choices = instance_utils.sort_flavor_list(
                 request, valid_flavors)
